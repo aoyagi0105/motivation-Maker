@@ -4,12 +4,14 @@ import axios from 'axios';
 import { baseURL } from '../common/common';
 import * as SecureStore from 'expo-secure-store';
 import { tokenStore } from '../auth/tokenStore';
-import { lastMotivationIdStore } from '../common/lastMotivationIdStore';
 import { favoriteMotivationIdStore } from '../common/store';
+import { useAppDispatch } from '../store/hooks';
+import { setLastMotivationId } from '../store/slices/motivationSlice';
 
 function LogInScreen({ navigation }) {
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
+    const dispatch = useAppDispatch();
 
     async function logIn() {
         const res = await axios.post(baseURL + `users/login`,
@@ -23,9 +25,9 @@ function LogInScreen({ navigation }) {
 
         await SecureStore.setItemAsync('refreshToken', refresh);
         tokenStore.set(access);
-        lastMotivationIdStore.set(lastMotivationId);
-        const currentAccessToken = tokenStore.get()
-        favoriteMotivationIdStore.set(user.favoriteMotivationIds)
+        favoriteMotivationIdStore.set(user.favoriteMotivationIds);
+
+        dispatch(setLastMotivationId(lastMotivationId));
 
         navigation.navigate('Main Screens');
     }

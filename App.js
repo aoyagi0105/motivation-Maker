@@ -10,27 +10,39 @@ import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './src/common/navigationRef'
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { LikedIcon } from './src/common/favorite/LikedIcon'
-import { favoriteToggle } from './src/common/favoriteToggle'
+import { LikedIcon } from './src/common/favorite/LikedIcon';
+import { favoriteToggle } from './src/common/favoriteToggle';
+import { Provider } from 'react-redux';
+import { store } from './src/store/store';
+import { useAppSelector, useFavoriteToggle } from "./src/store/hooks";
 
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function App() {
-  const [liked, setLiked] = useState(false);
+  return (
+    <Provider store={store}>
+      <AppInner />
+    </Provider>
+  )
+}
 
+
+function AppInner() {
+  const isFavored = useAppSelector(state => state.favorites.isFavored);
+  const toggle = useFavoriteToggle();
 
   function DrawerScreen() {
     return (
       <Drawer.Navigator >
         <Drawer.Screen name='MotivationScreen' component={MotivationScreen}
-          options={() => ({
+          options={{
             headerRight: () => <LikedIcon
-              liked={liked}
-              onToggle={favoriteToggle}
+              liked={isFavored}
+              onToggle={toggle}
             />
-          })}
+          }}
         />
         <Drawer.Screen name='FavoriteScreen' component={FavoriteScreen} />
       </Drawer.Navigator>
@@ -38,23 +50,13 @@ export default function App() {
   }
 
   return (
-    <>
-      <StatusBar style='dark' />
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator>
-          <Stack.Screen name='InitialScreen' component={InitialScreen} />
-          <Stack.Screen name='LogInScreen' component={LogInScreen} />
-          <Stack.Screen name='SignUpScreen' component={SignUpScreen} />
-          <Stack.Screen name='Main Screens' component={DrawerScreen} options={{ headerShown: false }} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </>
+    <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator>
+        <Stack.Screen name='InitialScreen' component={InitialScreen} />
+        <Stack.Screen name='LogInScreen' component={LogInScreen} />
+        <Stack.Screen name='SignUpScreen' component={SignUpScreen} />
+        <Stack.Screen name='Main Screens' component={DrawerScreen} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-
-const styles = StyleSheet.create({
-  likedButton: {
-    marginRight: 12,
-  },
-});

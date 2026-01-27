@@ -1,29 +1,25 @@
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, ScrollView, Button } from 'react-native';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { baseURL } from '../common/common';
 import { api } from '../auth/api';
-import { lastMotivationIdStore } from '../common/lastMotivationIdStore';
 import { tokenStore } from '../auth/tokenStore';
 import * as SecureStore from 'expo-secure-store';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { clearLastMotivationId, increseMotivationId } from '../store/slices/motivationSlice';
 
 function MotivationScreen({ navigation }) {
+    const dispatch = useAppDispatch();
+    const lastMotivationId = useAppSelector(state => state.motivation.lastMotivationId);
     const [motivation, setMotivation] = useState<Record<string, any> | null>(null);
     const [loading, setLoading] = useState(false);
-    const [motivationId, setMotivationId] = useState(0);
-    const [liked, setLiked] = useState(false);
-
 
     useEffect(() => {
-
         async function getMotivation() {
-            const accessToken = tokenStore.get();
-            const lastMotivationId = lastMotivationIdStore.get();
             setLoading(true);
+            const accessToken = tokenStore.get();
             api.get(baseURL + 'motivation/nextMotivation', {
                 params: {
-                    lastMotivationId: lastMotivationId
+                    lastMotivationId
                 },
                 headers: {
                     authorization: accessToken
@@ -31,7 +27,6 @@ function MotivationScreen({ navigation }) {
             })
                 .then(res => {
                     setMotivation(res.data.nextData);
-                    setMotivationId(lastMotivationId + 1);
                 })
                 .catch()
                 .finally(() => {
@@ -47,7 +42,7 @@ function MotivationScreen({ navigation }) {
         setLoading(true);
         api.get(baseURL + 'motivation/nextMotivation', {
             params: {
-                lastMotivationId: motivationId
+                lastMotivationId
             },
             headers: {
                 authorization: accessToken
@@ -55,7 +50,7 @@ function MotivationScreen({ navigation }) {
         })
             .then(res => {
                 setMotivation(res.data.nextData);
-                setMotivationId(motivationId + 1);
+                dispatch(increseMotivationId());
             })
             .catch(err => console.log(err))
             .finally(() => {
@@ -63,16 +58,9 @@ function MotivationScreen({ navigation }) {
             })
     }
 
-    function explainMotivation() {
-        axios.get(baseURL + 'motivation')
-            .then(res => {
-
-            })
-    }
-
     function signOut() {
         tokenStore.set(null);
-        lastMotivationIdStore.set(null);
+        dispatch(clearLastMotivationId());
         SecureStore.deleteItemAsync('refreshToken');
         navigation.navigate('InitialScreen');
     }
@@ -102,11 +90,6 @@ function MotivationScreen({ navigation }) {
             <View style={styles.buttonStyle}>
                 <Button title='next'
                     onPress={nextMotivation}
-                />
-            </View>
-            <View style={styles.buttonStyle}>
-                <Button title='explain'
-                    onPress={explainMotivation}
                 />
             </View>
             <View style={styles.buttonStyle}>

@@ -4,14 +4,15 @@ import { baseURL } from '../common/common';
 import * as SecureStore from 'expo-secure-store';
 import { tokenStore } from '../auth/tokenStore';
 import { api } from '../auth/api';
-import { lastMotivationIdStore } from '../common/lastMotivationIdStore';
+import { useAppDispatch } from '../store/hooks';
+import { setLastMotivationId } from '../store/slices/motivationSlice';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function SignUpScreen({ navigation }) {
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
     const [nickName, setNickName] = useState('');
+    const dispatch = useAppDispatch();
 
     async function signUp() {
         const res = await api.post(baseURL + 'users/signUp', { userId: id, password: pw, nickName })
@@ -19,8 +20,8 @@ function SignUpScreen({ navigation }) {
         const { access, refresh } = res.data.token;
         await SecureStore.setItemAsync('refreshToken', refresh);
         tokenStore.set(access);
-        lastMotivationIdStore.set(lastMotivationId);
 
+        dispatch(setLastMotivationId(lastMotivationId));
         navigation.navigate('Main Screens');
     }
 
