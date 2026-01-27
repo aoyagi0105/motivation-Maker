@@ -14,7 +14,7 @@
 - 다국어 지원 (번역 기능)
 
 ## Tech Stack
-- Frontend: react-native, react navigation
+- Frontend: React Native(Expo), React Navigation
 - State Management: Redux Toolkit
 - Network: Axios
 - Language: TypeScript, JavaScript
