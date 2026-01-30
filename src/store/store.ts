@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import favoriteReducer from './slices/favoriteSlice';
 import motivationReducer from './slices/motivationSlice';
+import languageReducer from './slices/languageSlice';
 
 export const store = configureStore({
     reducer: {
         favorites: favoriteReducer,
-        motivation: motivationReducer
+        motivation: motivationReducer,
+        language: languageReducer,
     }
 });
 

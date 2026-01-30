@@ -4,9 +4,9 @@ import axios from 'axios';
 import { baseURL } from '../common/common';
 import * as SecureStore from 'expo-secure-store';
 import { tokenStore } from '../auth/tokenStore';
-import { favoriteMotivationIdStore } from '../common/store';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setLastMotivationId } from '../store/slices/motivationSlice';
+import { setFavoriteIds } from '../store/slices/favoriteSlice';
 
 function LogInScreen({ navigation }) {
     const [id, setId] = useState('');
@@ -20,14 +20,13 @@ function LogInScreen({ navigation }) {
                 password: pw
             })
 
-        const { lastMotivationId, user } = res.data;
+        const { user } = res.data;
         const { access, refresh } = res.data.token;
 
         await SecureStore.setItemAsync('refreshToken', refresh);
         tokenStore.set(access);
-        favoriteMotivationIdStore.set(user.favoriteMotivationIds);
-
-        dispatch(setLastMotivationId(lastMotivationId));
+        dispatch(setLastMotivationId(user.lastMotivationId));
+        dispatch(setFavoriteIds(user.favoriteMotivationIds));
 
         navigation.navigate('Main Screens');
     }

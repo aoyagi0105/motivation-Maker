@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import InitialScreen from './src/screens/InitialScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import LogInScreen from './src/screens/LogInScreen';
@@ -8,13 +7,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './src/common/navigationRef'
-import { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { LikedIcon } from './src/common/favorite/LikedIcon';
-import { favoriteToggle } from './src/common/favoriteToggle';
 import { Provider } from 'react-redux';
 import { store } from './src/store/store';
 import { useAppSelector, useFavoriteToggle } from "./src/store/hooks";
+import { useAppDispatch } from './src/store/hooks';
+import { toggleFavorite } from './src/store/favoriteThunks'
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +22,9 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
     <Provider store={store}>
-      <AppInner />
+      <ActionSheetProvider>
+        <AppInner />
+      </ActionSheetProvider>
     </Provider>
   )
 }
@@ -31,7 +32,10 @@ export default function App() {
 
 function AppInner() {
   const isFavored = useAppSelector(state => state.favorites.isFavored);
-  const toggle = useFavoriteToggle();
+  const lastMotivationId = useAppSelector(state => state.motivation.lastMotivationId);
+  const favoriteCount = useAppSelector(state => state.favorites.favoriteCount);
+  const favoriteIds = useAppSelector(state => state.favorites.favoriteIds);
+  const dispatch = useAppDispatch();
 
   function DrawerScreen() {
     return (
@@ -40,11 +44,17 @@ function AppInner() {
           options={{
             headerRight: () => <LikedIcon
               liked={isFavored}
-              onToggle={toggle}
+              onToggle={() => dispatch(toggleFavorite(lastMotivationId))}
             />
           }}
         />
-        <Drawer.Screen name='FavoriteScreen' component={FavoriteScreen} />
+        <Drawer.Screen name='FavoriteScreen' component={FavoriteScreen}
+          options={{
+            headerRight: () => <LikedIcon
+              liked={isFavored}
+              onToggle={() => dispatch(toggleFavorite(favoriteIds[favoriteCount]))}
+            />
+          }} />
       </Drawer.Navigator>
     )
   }

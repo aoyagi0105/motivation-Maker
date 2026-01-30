@@ -1,29 +1,48 @@
-import { View, Text, StyleSheet, Button, TextInput, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { baseURL } from '../common/common';
 import * as SecureStore from 'expo-secure-store';
 import { tokenStore } from '../auth/tokenStore';
 import { api } from '../auth/api';
-import { useAppDispatch } from '../store/hooks';
-import { setLastMotivationId } from '../store/slices/motivationSlice';
-
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import { setLanguage } from '../store/slices/languageSlice';
+import { Langs } from '../common/language';
 
 function SignUpScreen({ navigation }) {
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
     const [nickName, setNickName] = useState('');
     const dispatch = useAppDispatch();
+    const { showActionSheetWithOptions } = useActionSheet();
+    const language = useAppSelector(state => state.language.language);
+    const selectedLang = Langs.find(lang => lang.value === language).label;
+
 
     async function signUp() {
         const res = await api.post(baseURL + 'users/signUp', { userId: id, password: pw, nickName })
-        const { lastMotivationId } = res.data;
         const { access, refresh } = res.data.token;
         await SecureStore.setItemAsync('refreshToken', refresh);
         tokenStore.set(access);
-
-        dispatch(setLastMotivationId(lastMotivationId));
         navigation.navigate('Main Screens');
     }
+
+    function openLanguageSheet() {
+        const options = ['cancle', ...Langs.map((lang) => lang.label)];
+        const cancelButtonIndex = 0;
+
+        showActionSheetWithOptions({ options, cancelButtonIndex },
+            (selectedIndex) => {
+                if (selectedIndex === 0) {
+                    return;
+                }
+
+                const picked = Langs.map((lang) => lang.value)[selectedIndex - 1];
+                dispatch(setLanguage(picked));
+            }
+        )
+    }
+
 
     return <View style={styles.rootContainer}>
         <View>
@@ -37,6 +56,12 @@ function SignUpScreen({ navigation }) {
         <View>
             <Text>nickName</Text>
             <TextInput style={styles.input} value={nickName} onChangeText={setNickName} />
+        </View>
+        <View >
+            <Text>language</Text>
+            <TouchableOpacity onPress={openLanguageSheet} style={styles.lanButton}>
+                <Text>{selectedLang}</Text>
+            </TouchableOpacity>
         </View>
         <View style={styles.buttonStyle}>
             <Button title='sign up' onPress={signUp} />
@@ -62,5 +87,15 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         marginTop: 5
+    },
+    lanButton: {
+        width: 200,
+        height: 40,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 5,
+        borderWidth: 1,
+        borderColor: 'black'
     }
 })
