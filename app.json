@@ -16,20 +16,25 @@
       "supportsTablet": true
     },
     "android": {
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-xxxxxxxx~yyyyyyyy"
-      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "edgeToEdgeEnabled": true,
+      "package": "com.tldtkddb3.motivation_maker"
     },
     "plugins": [
-      "expo-secure-store"
-    ]
+      "expo-secure-store",
+      "react-native-google-mobile-ads"
+    ],
+    "react-native-google-mobile-ads": {
+      "androidAppId": "ca-app-pub-xxxxxxxx~yyyyyyyy",
+      "iosAppId": "ca-app-pub-xxxxxxxx~zzzzzzzz"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e28bb6d4-4fca-47c9-8f9d-6b311e9cb8c9"
+      }
+    }
   }
 }

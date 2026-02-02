@@ -1,15 +1,16 @@
-import { View, Text, StyleSheet, Button, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useState } from 'react';
 import { baseURL } from '../common/common';
 import * as SecureStore from 'expo-secure-store';
 import { tokenStore } from '../auth/tokenStore';
-import { api } from '../auth/api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { setLanguage } from '../store/slices/languageSlice';
 import { Langs } from '../common/language';
+import axios from 'axios';
 
 function SignUpScreen({ navigation }) {
+
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
     const [nickName, setNickName] = useState('');
@@ -20,11 +21,15 @@ function SignUpScreen({ navigation }) {
 
 
     async function signUp() {
-        const res = await api.post(baseURL + 'users/signUp', { userId: id, password: pw, nickName })
-        const { access, refresh } = res.data.token;
-        await SecureStore.setItemAsync('refreshToken', refresh);
-        tokenStore.set(access);
-        navigation.navigate('Main Screens');
+        try {
+            const res = await axios.post(baseURL + 'users/signUp', { userId: id, password: pw, nickName })
+            const { access, refresh } = res.data.token;
+            await SecureStore.setItemAsync('refreshToken', refresh);
+            tokenStore.set(access);
+            navigation.navigate('Main Screens');
+        } catch (e) {
+            Alert.alert('sign up', e.response?.data?.message);
+        }
     }
 
     function openLanguageSheet() {

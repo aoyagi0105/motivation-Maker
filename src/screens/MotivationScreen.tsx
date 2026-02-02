@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView, Button } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, ScrollView, Button, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import { baseURL } from '../common/common';
 import { api } from '../auth/api';
@@ -22,47 +22,48 @@ function MotivationScreen({ navigation }) {
 
     useEffect(() => {
         async function getMotivation() {
+            try {
+                setLoading(true);
+                const res = await api.get(baseURL + 'motivation/nextMotivation', {
+                    params: {
+                        lastMotivationId,
+                        isMotivationScreen: true,
+                        language
+                    },
+                })
+                setMotivationText(res.data.text.text);
+                setMotivationAuthor(res.data.author.text);
+                dispatch(setIsFavored(res.data.isFavored));
+            } catch (e) {
+                console.log(e);
+            } finally {
+                setLoading(false);
+            }
+        }
+        getMotivation();
+    }, [language]);
+
+
+    async function nextMotivation() {
+        try {
             setLoading(true);
-            api.get(baseURL + 'motivation/nextMotivation', {
+            const res = await api.get(baseURL + 'motivation/nextMotivation', {
                 params: {
                     lastMotivationId,
                     isMotivationScreen: true,
                     language
                 },
             })
-                .then(res => {
-                    setMotivationText(res.data.text.text);
-                    setMotivationAuthor(res.data.author.text);
-                    dispatch(setIsFavored(res.data.isFavored));
-                })
-                .catch()
-                .finally(() => {
-                    setLoading(false);
-                })
+
+            setMotivationText(res.data.text.text);
+            setMotivationAuthor(res.data.author.text);
+            dispatch(setIsFavored(res.data.isFavored));
+            dispatch(increseMotivationId());
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setLoading(false);
         }
-        getMotivation();
-    }, [language]);
-
-
-    function nextMotivation() {
-        setLoading(true);
-        api.get(baseURL + 'motivation/nextMotivation', {
-            params: {
-                lastMotivationId,
-                isMotivationScreen: true,
-                language
-            },
-        })
-            .then(res => {
-                setMotivationText(res.data.text.text);
-                setMotivationAuthor(res.data.author.text);
-                dispatch(setIsFavored(res.data.isFavored));
-                dispatch(increseMotivationId());
-            })
-            .catch(err => console.log(err))
-            .finally(() => {
-                setLoading(false);
-            })
     }
 
 
@@ -79,6 +80,18 @@ function MotivationScreen({ navigation }) {
                 const picked = Langs.map((lang) => lang.value)[selectedIndex - 1];
                 dispatch(setLanguage(picked));
             }
+        )
+    }
+
+    function onPressSignOut() {
+        Alert.alert(
+            'logout',
+            'Are you sure you want to log out?',
+            [
+                { text: 'cancel', style: 'cancel' },
+                { text: 'logout', style: 'destructive', onPress: () => signOut() }
+            ],
+            { cancelable: true }
         )
     }
 
@@ -133,7 +146,7 @@ function MotivationScreen({ navigation }) {
             <View style={styles.signOutButtonStyle}>
                 <Button
                     title='sign out'
-                    onPress={signOut}
+                    onPress={onPressSignOut}
                 />
             </View>
             <View style={styles.changeLanguageButtonStyle}>

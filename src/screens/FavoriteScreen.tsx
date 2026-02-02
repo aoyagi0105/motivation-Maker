@@ -23,47 +23,48 @@ function FavoriteScreen({ navigation }) {
 
     useEffect(() => {
         async function getMotivation() {
-            setLoading(true);
-            api.get(baseURL + 'motivation/nextMotivation', {
-                params: {
-                    lastMotivationId: favoriteIds[favoriteCount],
-                    language
-                },
-            })
-                .then(res => {
-                    setMotivationText(res.data.text.text)
-                    setMotivationAuthor(res.data.author.text);
-                    dispatch(setIsFavored(res.data.isFavored));
+            try {
+                setLoading(true);
+                const res = await api.get(baseURL + 'motivation/nextMotivation', {
+                    params: {
+                        lastMotivationId: favoriteIds[favoriteCount],
+                        language
+                    },
                 })
-                .catch()
-                .finally(() => {
-                    setLoading(false);
-                })
+                setMotivationText(res.data.text.text);
+                setMotivationAuthor(res.data.author.text);
+                dispatch(setIsFavored(res.data.isFavored));
+            } catch (e) {
+                console.log(e);
+            } finally {
+                setLoading(false);
+            }
         }
         getMotivation();
     }, [language]);
 
 
-    function nextMotivation() {
-        if (!favoriteIds.length) return;
-        const next = (favoriteCount + 1) % favoriteIds.length;
-        dispatch(setFavoriteCount((next)));
-        setLoading(true);
-        api.get(baseURL + 'motivation/nextMotivation', {
-            params: {
-                lastMotivationId: favoriteIds[favoriteCount],
-                language
-            },
-        })
-            .then(res => {
-                setMotivationText(res.data.text.text)
-                setMotivationAuthor(res.data.author.text);
-                dispatch(setIsFavored(res.data.isFavored));
+    async function nextMotivation() {
+        try {
+            if (!favoriteIds.length) return;
+            const next = (favoriteCount + 1) % favoriteIds.length;
+            dispatch(setFavoriteCount((next)));
+            setLoading(true);
+            const res = await api.get(baseURL + 'motivation/nextMotivation', {
+                params: {
+                    lastMotivationId: favoriteIds[favoriteCount],
+                    language
+                },
             })
-            .catch(err => console.log(err))
-            .finally(() => {
-                setLoading(false);
-            })
+
+            setMotivationText(res.data.text.text)
+            setMotivationAuthor(res.data.author.text);
+            dispatch(setIsFavored(res.data.isFavored));
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
     }
 
     function signOut() {

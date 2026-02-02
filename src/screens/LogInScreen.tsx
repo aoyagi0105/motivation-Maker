@@ -14,21 +14,27 @@ function LogInScreen({ navigation }) {
     const dispatch = useAppDispatch();
 
     async function logIn() {
-        const res = await axios.post(baseURL + `users/login`,
-            {
-                userId: id,
-                password: pw
-            })
+        try {
+            const res = await axios.post(baseURL + `users/login`,
+                {
+                    userId: id,
+                    password: pw
+                })
 
-        const { user } = res.data;
-        const { access, refresh } = res.data.token;
+            const { user } = res.data;
+            const { access, refresh } = res.data.token;
 
-        await SecureStore.setItemAsync('refreshToken', refresh);
-        tokenStore.set(access);
-        dispatch(setLastMotivationId(user.lastMotivationId));
-        dispatch(setFavoriteIds(user.favoriteMotivationIds));
+            await SecureStore.setItemAsync('refreshToken', refresh);
+            tokenStore.set(access);
+            dispatch(setLastMotivationId(user.lastMotivationId));
+            dispatch(setFavoriteIds(user.favoriteMotivationIds));
 
-        navigation.navigate('Main Screens');
+            navigation.navigate('Main Screens');
+        } catch (e) {
+            console.log(e.response?.data?.message);
+            Alert.alert("login", e.response?.data?.message);
+        }
+
     }
 
     return <View style={styles.rootContainer}>
