@@ -10,6 +10,7 @@ import { clearFavorite, setFavoriteCount, setIsFavored } from '../store/slices/f
 import { clearLanguage, setLanguage } from '../store/slices/languageSlice';
 import { Langs } from '../common/language';
 import { useActionSheet } from '@expo/react-native-action-sheet';
+import { Alert } from 'react-native';
 
 function FavoriteScreen({ navigation }) {
     const dispatch = useAppDispatch();
@@ -67,6 +68,18 @@ function FavoriteScreen({ navigation }) {
         }
     }
 
+    function onPressSignOut() {
+        Alert.alert(
+            'logout',
+            'Are you sure you want to log out?',
+            [
+                { text: 'cancel', style: 'cancel' },
+                { text: 'logout', style: 'destructive', onPress: () => signOut() }
+            ],
+            { cancelable: true }
+        )
+    }
+
     function signOut() {
         dispatch(clearFavorite());
         dispatch(clearLastMotivationId());
@@ -109,7 +122,7 @@ function FavoriteScreen({ navigation }) {
             <View style={styles.noDataSignOutButton}>
                 <Button
                     title='sign out'
-                    onPress={signOut}
+                    onPress={onPressSignOut}
                 />
             </View>
         </View>
@@ -132,7 +145,7 @@ function FavoriteScreen({ navigation }) {
             </View>
             <View style={styles.signOutButtonStyle}>
                 <Button title='sign out'
-                    onPress={signOut}
+                    onPress={onPressSignOut}
                 />
             </View>
             <View style={styles.changeLanguageButtonStyle}>
