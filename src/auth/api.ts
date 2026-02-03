@@ -32,7 +32,9 @@ api.interceptors.response.use(
         }
 
         try {
-            const accessTokenRes = await axios.post(baseURL + "auth/getAccessToken", { refresh });
+            const accessTokenRes = await axios.post(baseURL + "auth/getAccessToken"
+                , null
+                , { headers: { authorization: `Bearer ${refresh}` } });
             const newAccessToken = accessTokenRes.data.access;
             tokenStore.set(newAccessToken);
             err.config.headers.authorization = `Bearer ${newAccessToken}`
