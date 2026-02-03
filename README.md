@@ -1,4 +1,4 @@
-<img width="1080" height="2400" alt="Screenshot_1770082302" src="https://github.com/user-attachments/assets/1b07f4f2-b9b7-42e1-b3bd-8540ca25f025" /># motivation-Maker
+# motivation-Maker
 이 앱은 zenquotes.io API를 이용해 모티베이션 문구를 제공하고 즐겨찾기 기능을 지원하는 모바일 애플리케이션입니다.
 백엔드 REST API와 통신하여 데이터를 조회하고, 즐겨찾기 기능을 제공합니다.
 
@@ -23,13 +23,13 @@
 - Language: TypeScript, JavaScript
 
 ## Screenshot
-<img width="1080" height="2400" alt="Screenshot_1770082302" src="https://github.com/user-attachments/assets/7a0fb9f1-a6e4-4605-b1bb-7746dccc71c7" />
+<img width="250" height="555" alt="Screenshot_1770082302" src="https://github.com/user-attachments/assets/7a0fb9f1-a6e4-4605-b1bb-7746dccc71c7" />
 동기부여 문구 화면.
 
-<img width="1080" height="2400" alt="Screenshot_1770082487" src="https://github.com/user-attachments/assets/2a1a95c8-f64c-4cd0-a8c6-f1e34cf7eddd" />
+<img width="250" height="555" alt="Screenshot_1770082487" src="https://github.com/user-attachments/assets/2a1a95c8-f64c-4cd0-a8c6-f1e34cf7eddd" />
 언어 선택시 곧바로 다른 언어로 변경된다
 
-<img width="1080" height="2400" alt="Screenshot_1770082581" src="https://github.com/user-attachments/assets/080b16c6-700a-422d-ab61-c3bed43cb0c1" />
+<img width="250" height="555" alt="Screenshot_1770082581" src="https://github.com/user-attachments/assets/080b16c6-700a-422d-ab61-c3bed43cb0c1" />
 즐겨찾기 등록을 하면 즐겨찾기 화면에서 문구를 볼수있다
 
 ## Related Repositories
