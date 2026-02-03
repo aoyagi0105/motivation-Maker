@@ -35,7 +35,7 @@ api.interceptors.response.use(
             const accessTokenRes = await axios.post(baseURL + "auth/getAccessToken", { refresh });
             const newAccessToken = accessTokenRes.data.access;
             tokenStore.set(newAccessToken);
-            err.config.headers.Authorization = `Bearer ${newAccessToken}`
+            err.config.headers.authorization = `Bearer ${newAccessToken}`
             return api(err.config);
         } catch (refreshErr) {
             Alert.alert('토큰이 만료되었습니다. 다시 로그인해주세요');
