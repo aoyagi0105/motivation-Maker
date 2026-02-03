@@ -1,12 +1,18 @@
 # motivation-Maker
-이 앱은 zenquotes.io API를 이용해 모티베이션 문구를 제공하고 즐겨찾기 기능을 지원하는 모바일 애플리케이션입니다.
-백엔드 REST API와 통신하여 데이터를 조회하고, 즐겨찾기 기능을 제공합니다.
+motivation-Maker는 사용자가 의미있다고 생각한 동기부여 문구를 다시 볼 수 있도록 설계한
+모바일 애플리케이션입니다.
+단순히 새로운 문구를 계속 소비하는 것이 아니라,
+사용자별로 문구를 저장하고 재확인하는 경험에 초점을 두었습니다.
 
 # Differentiation
-다른 앱과 다르게 이 앱은 즐겨찾기 기능을 지원하여, 자신의 마음에 드는 문구를 저장하여 돌려볼수있습니다.
-그리고 다른 앱은 무한히 새로운 문구를 보여주는데 반해, 이 앱은 한정된 문구를 돌려볼수있어 이전에 자신이 마음에 들었지만 
-즐겨찾기 등록을하지못한 문구를 다시금 등록할수있게 됩니다.
-문구는 기간마다 업데이트 되어 새로운 문구를 볼수있습니다.
+대부분의 동기부여 앱은 무한히 새로운 문구를 제공하지만,
+그로 인해 사용자가 인상 깊었던 문구를 다시 찾기 어려운 문제가 있다고 생각했습니다.
+
+motivation-Maker는 이 문제를 해결하기 위해
+문구의 수를 의도적으로 제한하고, 사용자가 이전에 보았던 문구를 다시 마주할 수 있는 구조로 설계했습니다.
+이를 통해 사용자는 의미 있었던 문구를 다시 선택하고 저장하는 경험을 할 수 있습니다.
+
+문구 데이터는 일정 기간마다 업데이트되어, 반복성과 신선함을 동시에 유지하도록 구성했습니다.
 
 ## Features
 - 로그인 / 회원가입 UI
@@ -23,18 +29,25 @@
 - Language: TypeScript, JavaScript
 
 ## Screenshot
+**로그인 / 회원가입**
+
 <img width="250" height="555" alt="Screenshot_1770083168" src="https://github.com/user-attachments/assets/3d21d57d-1af1-4976-b572-47488c15f8b3" />
 <img width="250" height="555" alt="Screenshot_1770083178" src="https://github.com/user-attachments/assets/288de32f-6c4d-431e-a932-e15a32544e30" />
 
-로그인 / 회원가입 화면. 회원가입 화면에서 언어를 설정할수있다. 
+회원가입 화면에서 언어를 설정할수있다. 
+
+
+**모티베이션 문구 화면**
 
 <img width="250" height="555" alt="Screenshot_1770082302" src="https://github.com/user-attachments/assets/7a0fb9f1-a6e4-4605-b1bb-7746dccc71c7" />
 
-동기부여 문구 화면.
+**언어 변경**
 
 <img width="250" height="555" alt="Screenshot_1770082487" src="https://github.com/user-attachments/assets/2a1a95c8-f64c-4cd0-a8c6-f1e34cf7eddd" />
 
 언어 선택시 곧바로 다른 언어로 변경된다
+
+**즐겨찾기 화면**
 
 <img width="250" height="555" alt="Screenshot_1770082581" src="https://github.com/user-attachments/assets/080b16c6-700a-422d-ab61-c3bed43cb0c1" />
 
