@@ -24,12 +24,15 @@
 
 ## Screenshot
 <img width="250" height="555" alt="Screenshot_1770082302" src="https://github.com/user-attachments/assets/7a0fb9f1-a6e4-4605-b1bb-7746dccc71c7" />
+
 동기부여 문구 화면.
 
 <img width="250" height="555" alt="Screenshot_1770082487" src="https://github.com/user-attachments/assets/2a1a95c8-f64c-4cd0-a8c6-f1e34cf7eddd" />
+
 언어 선택시 곧바로 다른 언어로 변경된다
 
 <img width="250" height="555" alt="Screenshot_1770082581" src="https://github.com/user-attachments/assets/080b16c6-700a-422d-ab61-c3bed43cb0c1" />
+
 즐겨찾기 등록을 하면 즐겨찾기 화면에서 문구를 볼수있다
 
 ## Related Repositories
