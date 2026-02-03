@@ -23,6 +23,11 @@
 - Language: TypeScript, JavaScript
 
 ## Screenshot
+<img width="250" height="555" alt="Screenshot_1770083168" src="https://github.com/user-attachments/assets/3d21d57d-1af1-4976-b572-47488c15f8b3" />
+<img width="250" height="555" alt="Screenshot_1770083178" src="https://github.com/user-attachments/assets/288de32f-6c4d-431e-a932-e15a32544e30" />
+
+로그인 / 회원가입 화면. 회원가입 화면에서 언어를 설정할수있다. 
+
 <img width="250" height="555" alt="Screenshot_1770082302" src="https://github.com/user-attachments/assets/7a0fb9f1-a6e4-4605-b1bb-7746dccc71c7" />
 
 동기부여 문구 화면.
@@ -33,7 +38,7 @@
 
 <img width="250" height="555" alt="Screenshot_1770082581" src="https://github.com/user-attachments/assets/080b16c6-700a-422d-ab61-c3bed43cb0c1" />
 
-즐겨찾기 등록을 하면 즐겨찾기 화면에서 문구를 볼수있다
+즐겨찾기 화면에서 즐겨찾기 등록된 문구를 볼수있다
 
 ## Related Repositories
 - Backend API: https://github.com/aoyagi0105/motivation-Maker-backend.git
