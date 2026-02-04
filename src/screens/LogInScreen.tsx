@@ -7,6 +7,7 @@ import { tokenStore } from '../auth/tokenStore';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setLastMotivationId } from '../store/slices/motivationSlice';
 import { setFavoriteIds } from '../store/slices/favoriteSlice';
+import { setLanguage } from '../store/slices/languageSlice';
 
 function LogInScreen({ navigation }) {
     const [id, setId] = useState('');
@@ -26,6 +27,7 @@ function LogInScreen({ navigation }) {
 
             await SecureStore.setItemAsync('refreshToken', refresh);
             tokenStore.set(access);
+            dispatch(setLanguage(user.language));
             dispatch(setLastMotivationId(user.lastMotivationId));
             dispatch(setFavoriteIds(user.favoriteMotivationIds));
 

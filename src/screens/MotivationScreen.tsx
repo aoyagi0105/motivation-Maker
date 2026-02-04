@@ -79,6 +79,9 @@ function MotivationScreen({ navigation }) {
 
                 const picked = Langs.map((lang) => lang.value)[selectedIndex - 1];
                 dispatch(setLanguage(picked));
+                api.patch(baseURL + 'users/changeLanguage', {
+                    language: picked
+                })
             }
         )
     }

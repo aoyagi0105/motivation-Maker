@@ -8,6 +8,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 import { setLanguage } from '../store/slices/languageSlice';
 import { Langs } from '../common/language';
 import axios from 'axios';
+import { initialMotivationId } from '../store/slices/motivationSlice';
 
 function SignUpScreen({ navigation }) {
 
@@ -22,10 +23,11 @@ function SignUpScreen({ navigation }) {
 
     async function signUp() {
         try {
-            const res = await axios.post(baseURL + 'users/signUp', { userId: id, password: pw, nickName })
+            const res = await axios.post(baseURL + 'users/signUp', { userId: id, password: pw, nickName, language });
             const { access, refresh } = res.data.token;
             await SecureStore.setItemAsync('refreshToken', refresh);
             tokenStore.set(access);
+            dispatch(initialMotivationId());
             navigation.navigate('Main Screens');
         } catch (e) {
             Alert.alert('sign up', e.response?.data?.message);

@@ -20,9 +20,12 @@ const MotivationIdSlice = createSlice({
         },
         increseMotivationId(state) {
             state.lastMotivationId += 1
+        },
+        initialMotivationId(state) {
+            state.lastMotivationId = 1
         }
     }
 })
 
-export const { setLastMotivationId, clearLastMotivationId, increseMotivationId } = MotivationIdSlice.actions;
+export const { setLastMotivationId, clearLastMotivationId, increseMotivationId, initialMotivationId } = MotivationIdSlice.actions;
 export default MotivationIdSlice.reducer;
