@@ -28,6 +28,11 @@ motivation-Maker는 이 문제를 해결하기 위해
 - Network: Axios
 - Language: TypeScript, JavaScript
 
+## Troubleshooting
+문제 : acceess token 만료시 axios interceptor에서 401 Unauthorized 에러를 확인하고 access token 재발급 요청을 보내는데,
+refresh token 도 만료되어 있을 경우 똑같이 401 Unauthorized 에러가 나기때문에 refresh token을 무한히 재발급 요청하게되는 에러가 있었습니다.
+해결 : axios interceptor에 retry flag를 추가하여 한 번 access token 재발급 요청을 보낸 경우에는 재발급 요청을 보내지 않도록 수정하였습니다.
+
 ## Screenshot
 **로그인 / 회원가입**
 
