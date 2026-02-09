@@ -21,17 +21,10 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.tldtkddb3.motivation_maker",
-      "versionCode": 2
+      "package": "com.tldtkddb3.motivation_maker"
     },
     "plugins": [
-      "expo-secure-store",
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-3940256099942544~3347511713"
-        }
-      ]
+      "expo-secure-store"
     ],
     "extra": {
       "eas": {

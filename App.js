@@ -14,18 +14,21 @@ import { useAppSelector, useFavoriteToggle } from "./src/store/hooks";
 import { useAppDispatch } from './src/store/hooks';
 import { toggleFavorite } from './src/store/favoriteThunks'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
-
+import { StatusBar } from 'expo-status-bar';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <ActionSheetProvider>
-        <AppInner />
-      </ActionSheetProvider>
-    </Provider>
+    <>
+      <StatusBar style='auto' />
+      <Provider store={store}>
+        <ActionSheetProvider>
+          <AppInner />
+        </ActionSheetProvider>
+      </Provider>
+    </>
   )
 }
 
