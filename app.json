@@ -2,7 +2,7 @@
   "expo": {
     "name": "motivationMaker",
     "slug": "motivationMaker",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,16 +21,18 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.tldtkddb3.motivation_maker"
+      "package": "com.tldtkddb3.motivation_maker",
+      "versionCode": 2
     },
     "plugins": [
       "expo-secure-store",
-      "react-native-google-mobile-ads"
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3940256099942544~3347511713"
+        }
+      ]
     ],
-    "react-native-google-mobile-ads": {
-      "androidAppId": "ca-app-pub-xxxxxxxx~yyyyyyyy",
-      "iosAppId": "ca-app-pub-xxxxxxxx~zzzzzzzz"
-    },
     "extra": {
       "eas": {
         "projectId": "e28bb6d4-4fca-47c9-8f9d-6b311e9cb8c9"
