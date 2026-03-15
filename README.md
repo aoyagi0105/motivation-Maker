@@ -1,5 +1,6 @@
+[한국어](./README.kr.md) | [日本語](./README.jp.md)
+
 # motivation-Maker
-[한국어](./README.kr.md) | [일본어](./README.jp.md)
 motivation-Maker is a mobile application designed to help users revisit and internalize motivational quotes that truly resonate with them.
 
 Rather than constantly consuming new content, the app focuses on a personalized experience where users can save and repeatedly encounter meaningful messages to create a lasting impact.
